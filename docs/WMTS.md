@@ -7,11 +7,15 @@ RBT provides two types of WMTS services:
 ## Deployment Endpoints
 
 ### Local Docker Compose Deployment
-- **TileserverGL**: `http://localhost:8081/tileservergl/`
-- **MapProxy WMTS**: `http://localhost:8081/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
+- **TileserverGL**: `https://<appliance-host>/`
+- **MapProxy WMTS**: `https://<appliance-host>/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
+- **Service links**: `https://<appliance-host>/links/`
+- **HTTP smoke-test equivalent**: replace `https://` with `http://`
 
 ### Production Deployment
-Replace `localhost:8081` with your production URL.
+Use the appliance hostname over port `443` for normal use. Use port `80` only
+for smoke tests or clients that cannot use the temporary/self-signed
+certificate.
 
 ---
 
@@ -25,8 +29,8 @@ Replace `localhost:8081` with your production URL.
 
 ### 3. Enter the connection details:
    - **Name**: `RBT MapProxy WMTS`
-   - **URL**: `http://localhost:8081/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
-   - For production, replace `localhost:8081` with your deployment URL
+   - **URL**: `https://<appliance-host>/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
+   - For HTTP smoke testing, use `http://<appliance-host>/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
 
 ### 4. Click **OK**, then click **Connect**
 
@@ -39,8 +43,8 @@ Replace `localhost:8081` with your production URL.
 ### 1. In the **Catalog** pane, right-click **Servers** and select **Add WMTS Server**
 
 ### 2. Enter the Server URL:
-   - `http://localhost:8081/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
-   - For production, replace `localhost:8081` with your deployment URL
+   - `https://<appliance-host>/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
+   - For HTTP smoke testing, use `http://<appliance-host>/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
 
 ### 3. Click **OK** to save the connection
 
@@ -53,11 +57,11 @@ Replace `localhost:8081` with your production URL.
 ## From QGIS
 
 ### 1. Open the TileserverGL interface:
-   - Local: `http://localhost:8081/tileservergl/`
-   - Production: Replace with your deployment URL
+   - HTTPS: `https://<appliance-host>/`
+   - HTTP smoke test: `http://<appliance-host>/`
 
 ### 2. Find the style you want and right-click the **WMTS** button, then select **Copy Link Address**
-   - Example URL: `http://localhost:8081/tileservergl/styles/RBT-TOPO-3395/wmts.xml`
+   - Example URL: `https://<appliance-host>/styles/RBT-TOPO-3395/wmts.xml`
 
 ### 3. In QGIS, right-click **WMS/WMTS** in the Browser panel and select **New Connection**
    ![WMTS CONNECTION](../images/wmts_connection.png)
@@ -92,8 +96,8 @@ Replace `localhost:8081` with your production URL.
 ## From ArcGIS Pro
 
 ### 1. Open the TileserverGL interface:
-   - Local: `http://localhost:8081/tileservergl/`
-   - Production: Replace with your deployment URL
+   - HTTPS: `https://<appliance-host>/`
+   - HTTP smoke test: `http://<appliance-host>/`
 
 ### 2. Find the style you want and right-click the **WMTS** button, then select **Copy Link Address**
 
@@ -145,6 +149,7 @@ Common styles include:
 - **RBT-DARK-3395**: Dark theme style  
 - **RBT-OVERLAY-3395**: Overlay style for use with imagery
 - **RBT-TOPO-3DBLDG-3395**: Topographic with 3D buildings
+- **RBT-TLM-SATELLITE-3395**: Satellite style, blank until imagery data is installed
 
 Visit the TileserverGL interface to see all available styles and their previews.
 
@@ -153,7 +158,7 @@ Visit the TileserverGL interface to see all available styles and their previews.
 ### Connection Failed
 - Ensure Docker containers are running: `docker ps`
 - Check if services are accessible in your browser
-- Verify firewall settings allow connections on port 8081
+- Verify firewall settings allow connections on ports 80 and 443
 
 ### No Layers Available
 - Ensure map data has been downloaded and mounted

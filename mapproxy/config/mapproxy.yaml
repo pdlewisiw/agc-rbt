@@ -1,7 +1,8 @@
 services:
+  demo:
   wmts:
     restful: true
-    kvp: false
+    kvp: true
     md:
       title: RBT WMTS
   wms:
@@ -143,18 +144,24 @@ caches:
 sources:
   rbt_topo_source:
     type: tile
-    # Changed from cluster URL to local container URL
+    # Primary runtime endpoint (container network)
     url: http://tileservergl:8080/styles/RBT-TOPO-3395/%(z)s/%(x)s/%(y)s.png
+    # Local host alternative (TileServer GL style endpoint with tile size path segment):
+    # url: http://127.0.0.1:8080/styles/RBT-TOPO-3395/256/%(z)s/%(x)s/%(y)s.png
     grid: mercator_3395
   rbt_dark_source:
     type: tile
-    # Changed from cluster URL to local container URL
+    # Primary runtime endpoint (container network)
     url: http://tileservergl:8080/styles/RBT-DARK-3395/%(z)s/%(x)s/%(y)s.png
+    # Local host alternative (TileServer GL style endpoint with tile size path segment):
+    # url: http://127.0.0.1:8080/styles/RBT-DARK-3395/256/%(z)s/%(x)s/%(y)s.png
     grid: mercator_3395
   rbt_overlay_source:
     type: tile
-    # Changed from cluster URL to local container URL
+    # Primary runtime endpoint (container network)
     url: http://tileservergl:8080/styles/RBT-OVERLAY-3395/%(z)s/%(x)s/%(y)s.png
+    # Local host alternative (TileServer GL style endpoint with tile size path segment):
+    # url: http://127.0.0.1:8080/styles/RBT-OVERLAY-3395/256/%(z)s/%(x)s/%(y)s.png
     grid: mercator_3395
     transparent: true
 

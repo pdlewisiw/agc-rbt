@@ -1,0 +1,92 @@
+seeds:
+  rbt_topo_3395_seed:
+    caches: [rbt_topo_3395_cache]
+    grids: [mercator_3395]
+    levels:
+      from: 0
+      to: 8
+    coverages: [world]
+  rbt_topo_4326_seed:
+    caches: [rbt_topo_4326_cache]
+    grids: [wgs84]
+    levels:
+      from: 0
+      to: 8
+    coverages: [world]
+  rbt_topo_3857_seed:
+    caches: [rbt_topo_3857_cache]
+    grids: [webmercator]
+    levels:
+      from: 0
+      to: 8
+    coverages: [world]
+
+  rbt_dark_3395_seed:
+    caches: [rbt_dark_3395_cache]
+    grids: [mercator_3395]
+    levels:
+      from: 0
+      to: 8
+    coverages: [world]
+  rbt_dark_4326_seed:
+    caches: [rbt_dark_4326_cache]
+    grids: [wgs84]
+    levels:
+      from: 0
+      to: 8
+    coverages: [world]
+  rbt_dark_3857_seed:
+    caches: [rbt_dark_3857_cache]
+    grids: [webmercator]
+    levels:
+      from: 0
+      to: 8
+    coverages: [world]
+
+  rbt_overlay_3395_seed:
+    caches: [rbt_overlay_3395_cache]
+    grids: [mercator_3395]
+    levels:
+      from: 0
+      to: 8
+    coverages: [world]
+  rbt_overlay_4326_seed:
+    caches: [rbt_overlay_4326_cache]
+    grids: [wgs84]
+    levels:
+      from: 0
+      to: 8
+    coverages: [world]
+  rbt_overlay_3857_seed:
+    caches: [rbt_overlay_3857_cache]
+    grids: [webmercator]
+    levels:
+      from: 0
+      to: 8
+    coverages: [world]
+
+cleanups:
+  rbt_topo_cleanup:
+    caches: [rbt_topo_3395_cache, rbt_topo_4326_cache, rbt_topo_3857_cache]
+    remove_all: false
+    remove_before:
+      time: 2020-01-01T00:00:00
+  rbt_dark_cleanup:
+    caches: [rbt_dark_3395_cache, rbt_dark_4326_cache, rbt_dark_3857_cache]
+    remove_all: false
+    remove_before:
+      time: 2020-01-01T00:00:00
+  rbt_overlay_cleanup:
+    caches: [rbt_overlay_3395_cache, rbt_overlay_4326_cache, rbt_overlay_3857_cache]
+    remove_all: false
+    remove_before:
+      time: 2020-01-01T00:00:00
+
+coverages:
+  world:
+    bbox: [-180, -90, 180, 90]
+    srs: "EPSG:4326"
+
+seeding:
+  concurrency: 8
+  progress_file: /data/mapproxy_seed_progress

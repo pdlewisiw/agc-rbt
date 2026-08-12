@@ -366,23 +366,25 @@ This means you need administrator privileges.
 
 ### How to Know It's Working
 1. Open your web browser
-2. Go to `http://localhost:8081/tileservergl/`
+2. Go to `http://localhost/`
 - You should see the TileserverGL main page
-3. Go to `http://localhost:8081/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
+3. Go to `http://localhost/links/`
+- You should see simple service discovery links
+4. Go to `http://localhost/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
 - You should see the MapProxy Generated WMTS
-4. Go to `http://localhost:8081/mapproxy/wms?SERVICE=WMS&REQUEST=GETCAPABILITIES`
+5. Go to `http://localhost/mapproxy/wms?SERVICE=WMS&REQUEST=GETCAPABILITIES`
 - You should see the MapProxy Generated WMS
-5. Alternative (direct) access:
-- TileserverGL: `http://localhost:8080` (if you need direct access)
-- MapProxy: `http://localhost:8081/wmts/1.0.0/WMTSCapabilities.xml` (backwards compatibility)
+6. Debug direct access:
+- TileserverGL: `http://localhost:8080`
+- MapProxy debug port `5000` is uWSGI, not browser HTTP. Test MapProxy through nginx.
 
 ## Connecting GIS Clients to RBT
 
-RBT provides multiple ways for GIS clients (like QGIS, ArcGIS, or Global Mapper) to connect and access map data. With the unified nginx routing, all services are now accessible through port 8081.
+RBT provides multiple ways for GIS clients (like QGIS, ArcGIS, or Global Mapper) to connect and access map data. With the unified nginx routing, services are available through the appliance web ports.
 
 ### Available Service Endpoints
 
-RBT exposes the following endpoints for GIS client connections through a unified nginx proxy on port 8081:
+RBT exposes the following endpoints for GIS client connections through nginx:
 
 #### 1. **MapProxy Services** - Best for Standard GIS Clients
 - **WMS**: `http://localhost:8081/mapproxy/wms`
@@ -391,16 +393,16 @@ RBT exposes the following endpoints for GIS client connections through a unified
 - Compatible with virtually all GIS software
 
 #### 2. **TileserverGL Services** - For Modern GIS Clients
-- **Web Interface**: `http://localhost:8081/tileservergl/`
-- **WMTS per style**: `http://localhost:8081/tileservergl/styles/{style-id}/wmts.xml`
-- **TileJSON**: `http://localhost:8081/tileservergl/styles/{style-id}.json`
-- **Vector Tiles**: `http://localhost:8081/tileservergl/data/{data-id}/{z}/{x}/{y}.pbf`
-- **Raster Tiles**: `http://localhost:8081/tileservergl/styles/{style-id}/{z}/{x}/{y}.png`
+- **Web Interface**: `http://localhost:8081/`
+- **WMTS per style**: `http://localhost:8081/styles/{style-id}/wmts.xml`
+- **TileJSON**: `http://localhost:8081/styles/{style-id}.json`
+- **Vector Tiles**: `http://localhost:8081/data/{data-id}/{z}/{x}/{y}.pbf`
+- **Raster Tiles**: `http://localhost:8081/styles/{style-id}/{z}/{x}/{y}.png`
 
 #### 3. **Direct Access (Optional)**
 If you need to bypass nginx for any reason:
 - **TileserverGL**: `http://localhost:8080` (port 8080)
-- **MapProxy**: `http://localhost:8081/wms` or `http://localhost:8081/wmts/1.0.0/WMTSCapabilities.xml` (backwards compatibility)
+- **MapProxy**: test through nginx at `http://localhost:8081/mapproxy/`; raw port `5000` is uwsgi, not HTTP
 
 ### Connecting GIS Clients to RBT
 
@@ -413,19 +415,19 @@ For detailed step-by-step instructions with screenshots on connecting QGIS and A
 - WMTS: `http://localhost:8081/mapproxy/wmts/1.0.0/WMTSCapabilities.xml`
 
 **TileserverGL (For Style Options):**
-- Web Interface: `http://localhost:8081/tileservergl/`
-- WMTS per style: `http://localhost:8081/tileservergl/styles/{style-id}/wmts.xml`
-- Vector Tiles: `http://localhost:8081/tileservergl/data/{data-id}/{z}/{x}/{y}.pbf`
+- Web Interface: `http://localhost:8081/`
+- WMTS per style: `http://localhost:8081/styles/{style-id}/wmts.xml`
+- Vector Tiles: `http://localhost:8081/data/{data-id}/{z}/{x}/{y}.pbf`
 
 ### Advanced TileserverGL Endpoints
 
 Based on the [TileserverGL documentation](https://tileserver.readthedocs.io/en/latest/endpoints.html), you can also access through the unified nginx proxy:
 
-- **List all styles**: `http://localhost:8081/tileservergl/styles.json`
-- **Style details**: `http://localhost:8081/tileservergl/styles/{style-id}/style.json`
-- **Available fonts**: `http://localhost:8081/tileservergl/fonts.json`
-- **Static images**: `http://localhost:8081/tileservergl/styles/{style-id}/static/{lon},{lat},{zoom}/{width}x{height}.png`
-- **Data inspection**: `http://localhost:8081/tileservergl/data/{data-id}/{z}/{x}/{y}.geojson`
+- **List all styles**: `http://localhost:8081/styles.json`
+- **Style details**: `http://localhost:8081/styles/{style-id}/style.json`
+- **Available fonts**: `http://localhost:8081/fonts.json`
+- **Static images**: `http://localhost:8081/styles/{style-id}/static/{lon},{lat},{zoom}/{width}x{height}.png`
+- **Data inspection**: `http://localhost:8081/data/{data-id}/{z}/{x}/{y}.geojson`
 
 ### Choosing the Right Endpoint
 
@@ -434,7 +436,7 @@ Based on the [TileserverGL documentation](https://tileserver.readthedocs.io/en/l
   - You want cached tiles for better performance
   - You're using standard OGC protocols (WMS/WMTS)
 
-- **Use TileserverGL endpoints** (`/tileservergl/*`) when:
+- **Use TileserverGL endpoints** (`/`, `/styles/*`, `/data/*`) when:
   - You want vector tiles for dynamic styling
   - You need the latest style directly from the source
   - You're using modern GIS clients that support vector tiles

@@ -18,7 +18,7 @@
       "maxRendererPoolSizes": [8, 4, 2],
       "pbfAlias": "pbf",
       "serveAllFonts": true,
-      "serveAllStyles": true,
+      "serveAllStyles": false,
       "serveStaticMaps": true
     },
     "data": {
