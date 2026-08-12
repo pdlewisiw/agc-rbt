@@ -1,0 +1,22 @@
+[Unit]
+Description=RBT MapProxy debug direct port
+After=rbt-network.network rbt-tileservergl-debug.container
+Requires=rbt-network.network rbt-tileservergl-debug.container
+
+[Container]
+Image=docker.io/mjj203/mapproxy:latest
+ContainerName=mapproxy
+Network=rbt-network.network
+PublishPort=0.0.0.0:5000:5000
+Volume=/data/rbt/mapproxy-cache:/data:Z
+Volume=/srv/rbt/mapproxy/config/mapproxy.yaml:/app/mapproxy.yaml:ro,Z
+Volume=/srv/rbt/mapproxy/config/uwsgi.ini:/app/uwsgi.ini:ro,Z
+Volume=/data/rbt/mapproxy-locks:/locks:Z
+Volume=/data/rbt/mapproxy-tile-locks:/tile_locks:Z
+ShmSize=16gb
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

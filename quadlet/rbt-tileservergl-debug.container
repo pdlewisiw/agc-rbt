@@ -1,0 +1,22 @@
+[Unit]
+Description=RBT TileserverGL debug direct port
+After=rbt-network.network
+Requires=rbt-network.network
+
+[Container]
+Image=docker.io/mjj203/rbt:tileservergl-3395-latest
+ContainerName=tileservergl
+Network=rbt-network.network
+PublishPort=0.0.0.0:8080:8080
+Volume=/data/rbt/mbtiles:/data:ro,Z
+Volume=/srv/rbt/tileserver/fonts:/fonts:ro,Z
+Volume=/srv/rbt/tileserver/styles:/styles:ro,Z
+Volume=/srv/rbt/tileserver/config:/config:ro,Z
+Exec=-c /config/config.json
+ShmSize=16gb
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

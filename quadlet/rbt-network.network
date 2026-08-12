@@ -1,0 +1,6 @@
+[Unit]
+Description=RBT Podman bridge network
+
+[Network]
+NetworkName=rbt-network
+Driver=bridge

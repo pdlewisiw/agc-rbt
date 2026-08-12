@@ -1,0 +1,26 @@
+[Unit]
+Description=RBT nginx for debug stack
+After=rbt-network.network rbt-mapproxy-debug.container
+Requires=rbt-network.network rbt-mapproxy-debug.container
+
+[Container]
+Image=docker.io/mjj203/nginx:latest
+ContainerName=nginx
+Network=rbt-network.network
+PublishPort=0.0.0.0:80:8081
+PublishPort=0.0.0.0:8081:8081
+PublishPort=0.0.0.0:8443:8443
+PublishPort=0.0.0.0:443:8443
+Volume=/srv/rbt/nginx/config/nginx.conf:/etc/nginx/nginx.conf:ro,Z
+Volume=/srv/rbt/nginx/html:/usr/share/nginx/html:ro,Z
+Volume=/srv/rbt/nginx/config/certs:/etc/nginx/certs:ro,Z
+Volume=/srv/rbt/nginx/cache:/var/cache/nginx:Z
+Volume=/srv/rbt/nginx/logs:/var/log/nginx:Z
+Volume=/srv/rbt/nginx/run:/var/run/nginx:Z
+ShmSize=1gb
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
